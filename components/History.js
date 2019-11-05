@@ -6,6 +6,10 @@ import { connect } from 'react-redux';
 import { receiveEntries, addEntry } from '../actions';
 import { timeToString, getDailyReminderValue } from '../utils/helpers';
 import { fetchCalendarResults } from '../utils/api';
+import UdaciFitnessCalendar from 'udacifitness-calendar';
+
+
+
 
 export class History extends Component {
     static propTypes = {
@@ -26,11 +30,35 @@ export class History extends Component {
                 }
             });
     }
-    render() {
+    // 渲染数据
+    renderItem = ({ today, ...metrics }, formattedDate, key) => (
+        <View>
+            {today ? (
+                <Text>{JSON.stringify(today)}</Text>
+            ) : (
+                <Text>{JSON.stringify(metrics)}</Text>
+            )}
+        </View>
+    );
+    //当天未记录渲染
+    renderEmptyDate(formattedDate) {
         return (
             <View>
-                <Text> {JSON.stringify(this.props)} </Text>
+                <Text>No data for this day</Text>
             </View>
+        );
+    }
+
+
+
+    render() {
+        const { entries } = this.props;
+        return (
+            <UdaciFitnessCalendar
+                items={entries}
+                renderItem={this.renderItem}
+                renderEmptyDate={this.renderEmptyDate}
+            />
         );
     }
 }
