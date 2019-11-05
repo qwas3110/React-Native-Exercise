@@ -1,10 +1,18 @@
 // App.js
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
+import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 import AddEntry from './components/AddEntry';
+
+
+const store = createStore(
+    reducer,
+    applyMiddleware(logger)
+);
+
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -14,7 +22,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-       <Provider store={createStore(reducer)}>
+       <Provider store={store}>
          <View style={{flex: 1}}>
            <AddEntry />
          </View>
