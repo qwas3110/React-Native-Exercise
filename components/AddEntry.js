@@ -8,6 +8,8 @@ import UdaciSlider from "./UdaciSlider";
 import UdaciStepper from "./UdaciStepper";
 import DateHeader from "./DateHeader";
 import TextButton from "./TextButton";
+import {submitEntry,removeEntry} from "../utils/api";
+
 
 const SubmitBtn = ({ onPress }) => {
     return (
@@ -29,6 +31,37 @@ export default class AddEntry extends Component {
         swim: 0,
         sleep: 0,
         eat: 0,
+    };
+
+
+    submit = () => {
+        const key = timeToString();
+        const entry = this.state;
+
+        // Update Redux
+
+        this.setState({
+            run: 0,
+            bike: 0,
+            swim: 0,
+            sleep: 0,
+            eat: 0
+        });
+
+        // Navigate to home
+
+        submitEntry({ key, entry });
+
+        // Clear local notification
+    };
+    reset = () => {
+        const key = timeToString();
+
+        // Update Redux
+
+        // Route to Home
+
+        removeEntry(key);
     };
 
 
