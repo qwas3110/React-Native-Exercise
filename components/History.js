@@ -25,12 +25,12 @@ import MetricCard from "./MetricCard";
 
 
 export class History extends Component {
-    static navigationOptions = {
-        tabBarLabel: 'History',
-        tabBarIcon: ({ tintColor }) => (
-            <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
-        )
-    };
+    // static navigationOptions = {
+    //     tabBarLabel: 'History',
+    //     tabBarIcon: ({ tintColor }) => (
+    //         <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
+    //     )
+    // };
 
 
     state = {

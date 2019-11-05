@@ -44,12 +44,12 @@ class AddEntry extends Component {
         addEntry: PropTypes.func.isRequired
     };
 
-    static navigationOptions = {
-        tabBarLabel: 'Add Entry',
-        tabBarIcon: ({ tintColor }) => (
-            <FontAwesome name="plus-square" size={30} color={tintColor} />
-        )
-    };
+    // static navigationOptions = {
+    //     tabBarLabel: 'Add Entry',
+    //     tabBarIcon: ({ tintColor }) => (
+    //         <FontAwesome name="plus-square" size={30} color={tintColor} />
+    //     )
+    // };
 
 
     state = {
