@@ -6,6 +6,7 @@ import { white, purple } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { getMetricMetaInfo, timeToString,getDailyReminderValue } from '../utils/helpers';
 import {submitEntry,removeEntry} from "../utils/api";
+
 import { connect } from 'react-redux';
 import {addEntry} from "../actions";
 
@@ -15,8 +16,7 @@ import DateHeader from "./DateHeader";
 import TextButton from "./TextButton";
 
 
-
-
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const SubmitBtn = ({ onPress }) => {
@@ -43,6 +43,14 @@ class AddEntry extends Component {
         alreadyLogged: PropTypes.bool,
         addEntry: PropTypes.func.isRequired
     };
+
+    static navigationOptions = {
+        tabBarLabel: 'Add Entry',
+        tabBarIcon: ({ tintColor }) => (
+            <FontAwesome name="plus-square" size={30} color={tintColor} />
+        )
+    };
+
 
     state = {
         run: 0,

@@ -2,8 +2,8 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
-import History from '../components/History';
-import AddEntry from '../components/AddEntry';
+import History from "../components/History";
+import AddEntry from "../components/AddEntry";
 import { purple, white } from '../utils/colors';
 
 export default createBottomTabNavigator(

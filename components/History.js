@@ -15,13 +15,23 @@ import { receiveEntries, addEntry } from '../actions';
 import { timeToString, getDailyReminderValue } from '../utils/helpers';
 import { fetchCalendarResults } from '../utils/api';
 import UdaciFitnessCalendar from 'udacifitness-calendar';
-import {AppLoading} from "expo";
+import { AppLoading } from 'expo';
+
+import { Ionicons } from '@expo/vector-icons';
+
 
 import MetricCard from "./MetricCard";
 
 
 
 export class History extends Component {
+    static navigationOptions = {
+        tabBarLabel: 'History',
+        tabBarIcon: ({ tintColor }) => (
+            <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
+        )
+    };
+
 
     state = {
         ready: false

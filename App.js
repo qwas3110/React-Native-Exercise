@@ -8,6 +8,10 @@ import reducer from './reducers';
 import AddEntry from './components/AddEntry';
 import History from "./components/History";
 
+import AppNavigator from "./navigation/AppNavigator";
+
+
+
 const store = createStore(
     reducer,
     applyMiddleware(logger)
@@ -22,12 +26,11 @@ export default class App extends React.Component {
   }
   render() {
     return (
-       <Provider store={store}>
-         <View style={{flex: 1}}>
-           {/*<AddEntry />*/}
-           <History/>
-         </View>
-       </Provider>
+        <Provider store={store}>
+            <View style={{flex:1}}>
+                <AppNavigator />
+            </View>
+        </Provider>
     );
   }
 }
