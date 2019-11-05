@@ -15,12 +15,18 @@ import { receiveEntries, addEntry } from '../actions';
 import { timeToString, getDailyReminderValue } from '../utils/helpers';
 import { fetchCalendarResults } from '../utils/api';
 import UdaciFitnessCalendar from 'udacifitness-calendar';
+import {AppLoading} from "expo";
 
 import MetricCard from "./MetricCard";
 
 
 
 export class History extends Component {
+
+    state = {
+        ready: false
+    };
+
     static propTypes = {
         dispatch: PropTypes.func.isRequired
     };
@@ -37,7 +43,8 @@ export class History extends Component {
                         })
                     );
                 }
-            });
+            })
+            .then(() => this.setState({ ready: true }));
     }
     // 渲染数据
     renderItem = ({ today, ...metrics }, formattedDate, key) => (
@@ -68,6 +75,12 @@ export class History extends Component {
 
     render() {
         const { entries } = this.props;
+        const { ready } = this.state;
+
+        if (ready === false) {
+            return <AppLoading />;
+        }
+
         return (
             <UdaciFitnessCalendar
                 items={entries}
