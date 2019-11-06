@@ -15,6 +15,10 @@ import UdaciStepper from "./UdaciStepper";
 import DateHeader from "./DateHeader";
 import TextButton from "./TextButton";
 
+import { withNavigation } from 'react-navigation';
+
+
+
 
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -41,7 +45,8 @@ SubmitBtn.propTypes = {
 class AddEntry extends Component {
     static propTypes = {
         alreadyLogged: PropTypes.bool,
-        addEntry: PropTypes.func.isRequired
+        addEntry: PropTypes.func.isRequired,
+        navigation: PropTypes.object,
     };
 
     // static navigationOptions = {
@@ -79,6 +84,7 @@ class AddEntry extends Component {
         });
 
         // Navigate to home
+        this.toHome();
 
         submitEntry({ key, entry });
 
@@ -93,8 +99,13 @@ class AddEntry extends Component {
         });
 
         // Route to Home
+        this.toHome();
+
 
         removeEntry(key);
+    };
+    toHome = () => {
+        this.props.navigation.goBack();
     };
 
 
@@ -232,7 +243,9 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    { addEntry }
-)(AddEntry);
+export default withNavigation(
+    connect(
+        mapStateToProps,
+        { addEntry }
+    )(AddEntry)
+);
