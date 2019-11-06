@@ -1,12 +1,16 @@
 // App.js
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet, View, StatusBar } from 'react-native';
 import {createStore, applyMiddleware} from "redux";
 import logger from 'redux-logger';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
-import AddEntry from './components/AddEntry';
-import History from "./components/History";
+import Constants from 'expo-constants';
+import { purple } from './utils/colors';
+
+
+
 
 import AppNavigator from "./navigation/AppNavigator";
 
@@ -18,6 +22,20 @@ const store = createStore(
 );
 
 
+
+
+function UdacityStatusBar({ backgroundColor, ...props }) {
+    return (
+        <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+            <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+        </View>
+    );
+}
+UdacityStatusBar.propTypes = {
+    backgroundColor: PropTypes.string.isRequired
+};
+
+
 export default class App extends React.Component {
   componentDidMount() {
     console.log('begin');
@@ -27,7 +45,8 @@ export default class App extends React.Component {
   render() {
     return (
         <Provider store={store}>
-            <View style={{flex:1}}>
+            <View style={styles.container}>
+                <UdacityStatusBar backgroundColor={purple} barStyle="light-content" />
                 <AppNavigator />
             </View>
         </Provider>
@@ -35,11 +54,8 @@ export default class App extends React.Component {
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center'
-//   }
-// });
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+});
