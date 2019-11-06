@@ -38,7 +38,9 @@ export class History extends Component {
     };
 
     static propTypes = {
-        dispatch: PropTypes.func.isRequired
+        dispatch: PropTypes.func.isRequired,
+        entries: PropTypes.object.isRequired,
+        navigation: PropTypes.object.isRequired,
     };
     componentDidMount() {
         const { dispatch } = this.props;
@@ -65,7 +67,11 @@ export class History extends Component {
                     <Text style={styles.noDataText}>{today}</Text>
                 </View>
             ) : (
-                <TouchableOpacity onPress={() => console.log('Pressed!')}>
+                <TouchableOpacity
+                    onPress={() =>
+                        this.props.navigation.navigate('EntryDetail', { entryId: key })
+                    }
+                >
                     <MetricCard date={formattedDate} metrics={metrics} />
                 </TouchableOpacity>
             )}
