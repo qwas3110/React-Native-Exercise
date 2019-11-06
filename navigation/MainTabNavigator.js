@@ -1,10 +1,12 @@
-// TabNavigator.js
+// MainTabNavigator.js
 import React from 'react';
 import { Platform } from 'react-native';
 import {
     createBottomTabNavigator,
-    createMaterialTopTabNavigator
+    createMaterialTopTabNavigator,
+    createStackNavigator
 } from 'react-navigation';
+import EntryDetail from "../components/EntryDetail";
 import History from "../components/History";
 import AddEntry from "../components/AddEntry";
 import { purple, white } from '../utils/colors';
@@ -78,7 +80,31 @@ const Tabs = isIOS
     ? createBottomTabNavigator(routeConfigs, tabNavigatorConfig)
     : createMaterialTopTabNavigator(routeConfigs, tabNavigatorConfig);
 
-export default Tabs;
+// export default Tabs;
+
+
+const MainNavigator = createStackNavigator({
+    Home: {
+        screen: Tabs
+    },
+    EntryDetail: {
+        screen: EntryDetail,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple
+            }
+        }
+    }
+});
+
+export default MainNavigator;
+
+
+
+
+
+
 
 // export default createBottomTabNavigator(
 //     {
