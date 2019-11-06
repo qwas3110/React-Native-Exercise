@@ -1,11 +1,20 @@
 // EntryDetail.js
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text,StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+
+
+import { connect } from 'react-redux';
+import { white } from '../utils/colors';
+import MetricCard from '../components/MetricCard';
+
+
 
 class EntryDetail extends Component {
     static propTypes = {
-        navigation: PropTypes.object.isRequired
+        navigation: PropTypes.object.isRequired,
+        metrics: PropTypes.object.isRequired,
+        entryId: PropTypes.string.isRequired,
     };
 
     static navigationOptions = ({ navigation }) => {
@@ -21,15 +30,33 @@ class EntryDetail extends Component {
     };
 
     render() {
+        const { metrics, entryId } = this.props;
+
         return (
-            <View>
-                <Text>Entry Detail</Text>
-                <Text>
-                    EntryId: {this.props.navigation.getParam('entryId', 'No Id')}
-                </Text>
+            <View style={styles.container}>
+                <MetricCard metrics={metrics} />
+                <Text>EntryId: {entryId}</Text>
             </View>
         );
     }
 }
 
-export default EntryDetail;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: white,
+        padding: 15
+    }
+});
+
+const mapStateToProps = (state, { navigation }) => {
+    const entryId = navigation.getParam('entryId', 'No Id');
+
+    return {
+        entryId,
+        metrics: state[entryId]
+    };
+};
+
+
+export default connect(mapStateToProps)(EntryDetail);
