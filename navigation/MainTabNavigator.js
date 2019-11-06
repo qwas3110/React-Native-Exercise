@@ -14,6 +14,7 @@ import { purple, white } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
+import Live from "../components/Live";
 
 
 const isIOS = Platform.OS === 'ios' ? true : false;
@@ -38,6 +39,19 @@ const routeConfigs = {
             tabBarLabel: 'Add Entry',
             tabBarIcon: ({ tintColor }) => (
                 <FontAwesome name="plus-square" size={30} color={tintColor} />
+            )
+        }
+    },
+    Live: {
+        screen: Live,
+        navigationOptions: {
+            tabBarLabel: 'Live',
+            tabBarIcon: ({ tintColor }) => (
+                <Ionicons
+                    name={isIOS ? 'ios-speedometer' : 'md-speedometer'}
+                    size={30}
+                    color={tintColor}
+                />
             )
         }
     }
