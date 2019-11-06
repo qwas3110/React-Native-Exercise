@@ -8,6 +8,18 @@ class EntryDetail extends Component {
         navigation: PropTypes.object.isRequired
     };
 
+    static navigationOptions = ({ navigation }) => {
+        const entryId = navigation.getParam('entryId', 'No Id');
+
+        const year = entryId.slice(0, 4);
+        const month = entryId.slice(5, 7);
+        const day = entryId.slice(8);
+
+        return {
+            title: `${month}/${day}/${year}`
+        };
+    };
+
     render() {
         return (
             <View>
