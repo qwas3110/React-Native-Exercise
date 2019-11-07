@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { white, purple } from '../utils/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { getMetricMetaInfo, timeToString,getDailyReminderValue } from '../utils/helpers';
+import {
+    getMetricMetaInfo,
+    timeToString,
+    getDailyReminderValue,
+    clearLocalNotification,
+    setLocalNotification
+} from '../utils/helpers';
 import {submitEntry,removeEntry} from "../utils/api";
 
 import { connect } from 'react-redux';
@@ -89,6 +95,7 @@ class AddEntry extends Component {
         submitEntry({ key, entry });
 
         // Clear local notification
+        clearLocalNotification().then(setLocalNotification())
     };
     reset = () => {
         const key = timeToString();

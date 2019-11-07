@@ -8,8 +8,7 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import Constants from 'expo-constants';
 import { purple } from './utils/colors';
-
-
+import {setLocalNotification} from "./utils/helpers";
 
 
 import AppNavigator from "./navigation/AppNavigator";
@@ -38,9 +37,7 @@ UdacityStatusBar.propTypes = {
 
 export default class App extends React.Component {
   componentDidMount() {
-    console.log('begin');
-    debugger;
-    console.log('end');
+   setLocalNotification()
   }
   render() {
     return (
