@@ -1,6 +1,8 @@
 // utils/helpers.js
 import React from "react";
-import { View,StyleSheet } from "react-native";
+import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import {
     FontAwesome,
     MaterialIcons,
@@ -8,20 +10,74 @@ import {
 } from "@expo/vector-icons";
 import { white, red, orange, blue, lightPurp, pink } from './colors';
 
+const NOTIFICATION_KEY = 'UdaciFitness:notifications';
+const CHANNEL_ID = 'udaci1';
 
 
-const styles = StyleSheet.create({
-    iconContainer: {
-        padding: 5,
-        borderRadius: 8,
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 20
-    }
-});
 
+export function clearLocalNotification() {
+    return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+        Notifications.cancelAllScheduledNotificationsAsync
+    );
+}
+
+function createNotification() {
+    return {
+        title: 'Log your stats!',
+        body: "👋 Don't forget to log your stats for today!",
+        ios: {
+            sound: true
+        },
+        android: {
+            channelId: CHANNEL_ID,
+            sticky: false,
+            color: 'red'
+        }
+    };
+}
+
+
+function createChannel() {
+    return {
+        name: 'Daily Reminder',
+        description: 'Description of what this notification channel is...',
+        sound: true,
+        priority: 'high'
+    };
+}
+
+
+export function setLocalNotification() {
+    AsyncStorage.getItem(NOTIFICATION_KEY)
+        .then(JSON.parse)
+        .then(data => {
+            if (data === null) {
+                Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+                    if (status === 'granted') {
+                        Notifications.createChannelAndroidAsync(CHANNEL_ID, createChannel())
+                            .then(() => {
+                                Notifications.cancelAllScheduledNotificationsAsync();
+
+                                const tomorrow = new Date();
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                tomorrow.setHours(20);
+                                tomorrow.setMinutes(0);
+
+                                Notifications.scheduleLocalNotificationAsync(
+                                    createNotification(),
+                                    {
+                                        time: tomorrow,
+                                        repeat: 'day'
+                                    }
+                                );
+
+                                AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+                            });
+                    }
+                });
+            }
+        });
+}
 
 
 export function isBetween (num, x, y) {
@@ -152,3 +208,16 @@ export function getDailyReminderValue() {
         today: "👋 Don't forget to log your data today!"
     };
 }
+
+
+const styles = StyleSheet.create({
+    iconContainer: {
+        padding: 5,
+        borderRadius: 8,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 20
+    }
+});
